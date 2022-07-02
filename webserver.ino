@@ -49,12 +49,5 @@ void start_webserver() {
     request->send_P(200, "text/plain", String(devname).c_str());
   });
 
-  /* Reboot */
-  server.on("/reboot", HTTP_POST, [](AsyncWebServerRequest * request) {
-    request->send(200, "text/plain", "Neustart...");
-    delay(1000);
-    ESP.restart();
-  });
-
   server.begin();
 }

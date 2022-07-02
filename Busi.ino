@@ -227,8 +227,6 @@ void run(void) {
     printDateTime(utc, "UTC");
     printDateTime(local, tcr -> abbrev);
     Serial.println();
-
-    Serial.println();
     Serial.println((String)"rightNow = " + rn);
     Serial.println((String)"DozeTime: " + big_time(dozetime) + " (" + dozetime + ")");
     Serial.println((String)"Wake-Time: " + big_time(waketime) + " (" + waketime + ")");

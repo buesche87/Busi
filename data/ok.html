@@ -13,39 +13,69 @@
   <div class="content">
     <div class="card-grid">
       <div class="card">
-	  <form action="/reboot" method="POST">
-		<p>
-		  <h3>Neustart notwendig</h3>
-		  <p style="font-size: 1.2rem; margin:12px">Du findest dein Busi hier:</p>
-		  <span id="link" class="link"><a href="http://busi.local">http://<i>name</i>.local</a></span>
-		  <p><span class="message">Nicht alle Geräte unterstüzen diesen Link. Alternativ kannst du über die vom Router zugewiesene IP-Adresse zugreifen</span></p>
-		  <input type="submit" value="Neustart">
-		</p>
-	  </div>
+        <p>
+          <h3>Neustart notwendig</h3>
+          <p style="font-size: 1.2rem; margin:12px">Du findest dein Busi hier:</p>
+          <span id="link" class="link"><a href="http://busi.local">http://<i>name</i>.local</a></span>
+          <p><span class="message">Nicht alle Geräte unterstüzen diesen Link. Alternativ kannst du über die vom Router zugewiesene IP-Adresse zugreifen</span></p>
+		  <input type="button" value="Neustart" onclick="reboot()">
+        </p>
+      </div>
     </div>
   </div>
 </body>
 <script>
 
   window.addEventListener('load', getName);
-
+  window.addEventListener('load', initWebSocket);
+  
+  /* getName */
   function getName() {
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
-  	if (this.readyState == 4 && this.status == 200) {
-	
-	  var devstr = this.responseText + " Manager";
-	  document.querySelector('title').textContent = devstr;
-	  document.getElementById("head").innerHTML = "<h1>" + devstr + "</h1>";
-	  
-	  const homeref = '<a href="http://' + this.responseText + '.local">http://' + this.responseText + '.local</a>';
-  	  document.getElementById("link").innerHTML = homeref;
-	  console.log("link: " + homeref);
-  	}
+      if (this.readyState == 4 && this.status == 200) {
+    
+      var devstr = this.responseText + " Manager";
+      document.querySelector('title').textContent = devstr;
+      document.getElementById("head").innerHTML = "<h1>" + devstr + "</h1>";
+      
+      const homeref = '<a href="http://' + this.responseText + '.local">http://' + this.responseText + '.local</a>';
+        document.getElementById("link").innerHTML = homeref;
+      console.log("link: " + homeref);
+      }
     };
     xhttp.open("GET", "/ok", true);
     xhttp.send();
-	}
+    }
+  
+  /* Reboot */
+  
+  function reboot(event) {
+  
+    var json = JSON.stringify({'config':"reboot"});
+
+    websocket.send(json);
+    console.log("json sent: " + json);
+
+  }
+
+  /* Helpfunctions */
+
+  function initWebSocket() {
+    console.log('Trying to open a WebSocket connection...');
+    websocket = new WebSocket(((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + "/ws");
+    websocket.onopen    = onOpen;
+    websocket.onclose   = onClose;
+  }
+
+  function onOpen(event) {
+    console.log('Connection opened');
+  }
+
+  function onClose(event) {
+    console.log('Connection closed');
+    setTimeout(initWebSocket, 2000);
+  }
 
 </script>
 </html>

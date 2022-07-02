@@ -13,142 +13,142 @@
   <div class="content">
     <div class="card-grid">
       <div class="card">
-		<p>
-		  <span id="time" class="time"></span>
-		  <span id="date" class="date"></span>
-		  <span id="statuscolor" class="color">&nbsp;</span>
-		  <span id="ip" class="ip"></span>
-		</p>
-	  </div>
-		<div class="card">
+        <p>
+          <span id="time" class="time"></span>
+          <span id="date" class="date"></span>
+          <span id="statuscolor" class="color">&nbsp;</span>
+          <span id="ip" class="ip"></span>
+        </p>
+      </div>
+      <div class="card">
+        <p>
+          <h3>Manueller Modus</h3>
+          <input type="button" value="Start" onclick="startManual()">
+        </p>
+      </div>
+        <div class="card">
           <p>
-			<h3>Netzwerk</h3>
-		    <input type="text" id="devname" placeholder="Name (optional)" onkeyup="nospaces(this)">
-			<br>
-		    <input type="text" id="ssid" placeholder="WLAN" onkeyup="nospaces(this)">
-			<br>
-		    <input type="password" id="pass" placeholder="Passwort">
-			<br><br>
-			<input type="button" value="Speichern" onclick="netSave()">
-          </p>
-	  </div>
-		<div class="card">
-          <p>
-			<h3>Timer</h3>
-			<label for="dozetime">Schlummern</label>
-			<input type="time" id="dozetime">
-			<label class="chkbxcontainer">
-				<input type="checkbox" id="dozeactive">
-				<span class="checkmark"></span>
-            </label>
-			<br>
-			<label for="waketime">Aufwachen</label>
-			<input type="time" id="waketime">
-			<label class="chkbxcontainer">
-				<input type="checkbox" id="wakeactive">
-				<span class="checkmark"></span>
-            </label>
-			<br>
-			<label for="morningtime">Aus</label>
-			<input type="time" id="morningtime">
-			<label class="chkbxcontainer">
-				<input type="checkbox" id="morningactive" checked disabled>
-				<span class="checkmark"></span>
-            </label>
-			<br>
-			<label for="noontime">Mittag</label>
-			<input type="time" id="noontime">
-			<label class="chkbxcontainer">
-				<input type="checkbox" id="noonactive">
-				<span class="checkmark"></span>
-            </label>
-			<br>
-			<label for="afternoontime">Aus</label>
-			<input type="time" id="afternoontime">
-			<label class="chkbxcontainer">
-				<input type="checkbox" id="afternoonactive" checked disabled>
-				<span class="checkmark"></span>
-            </label>
-			<br>
-			<label for="sleeptime">Schlafen</label>
-			<input type="time" id="sleeptime">
-			<label class="chkbxcontainer">
-				<input type="checkbox" id="sleepactive">
-				<span class="checkmark"></span>
-            </label>
-			<br><br>
-			<input type="button" value="Speichern" onclick="timeSave()"><input type="button" value="Reset" onclick="configReload()">
-			<br>
-          </p>
-	  </div>
-	  <div class="card">
-          <p>
-			<h3>Nachtlicht</h3>
-			<input type="range" id="sleepyellowmin" style="background-image:linear-gradient(to right, red , yellow);" min="0" max="255" class="colorslider">
-			<label for="sleepyellowminval" class="sliderlabel">Basisfarbe</label>
-			<span id="sleepyellowminval" class="sliderspan"></span>
-			<br>
-			<input type="range" id="sleepyellowrange" style="background-image:linear-gradient(to right, black , yellow);" min="0" max="255" class="colorslider">
-			<label for="sleepyellowrangeval" class="sliderlabel">Reichweite</label>
-			<span id="sleepyellowrangeval" class="sliderspan"></span>
-			<br>
-			<input type="range" id="sleepbrightness" style="background-image:linear-gradient(to right, black , white);" min="0" max="10" class="slider">
-			<label for="sleepbrightnessval" class="sliderlabel">Helligkeit</label>
-			<span id="sleepbrightnessval" class="sliderspan"></span>
-			<br>
-			<input type="range" id="sleepspeed" style="background-image:linear-gradient(to right, black , white);" min="0" max="10" class="slider">
-			<label for="sleepseedval" class="sliderlabel">Geschwindigkeit</label>
-			<span id="sleepspeedval" class="sliderspan"></span>
-			<br><br>
-			<input type="button" value="Speichern" onclick="configSave()"><input type="button" value="Reset" onclick="configReload()"><input type="button" value="Test" onclick="sleepTest()">
+            <h3>Netzwerk</h3>
+            <input type="text" id="devname" placeholder="Name (optional)" onkeyup="nospaces(this)">
+            <br>
+            <input type="text" id="ssid" placeholder="WLAN" onkeyup="nospaces(this)">
+            <br>
+            <input type="password" id="pass" placeholder="Passwort">
+            <br><br>
+            <input type="button" value="Speichern" onclick="netSave()">
           </p>
       </div>
-	  <div class="card">
+        <div class="card">
           <p>
-			<h3>Schlummern</h3>
-			<input type="range" id="dozestartcolor" style="background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%, rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%, rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%, rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%);" min="0" max="255" class="colorslider">
-			<label for="dozestartcolorval" class="sliderlabel">Start Farbe</label>
-			<span id="dozestartcolorval" class="sliderspan"></span>
-			<br>
-			<input type="range" id="dozestopcolor" style="background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%, rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%, rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%, rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%);" min="0" max="255" class="colorslider">
-			<label for="dozestopcolorval" class="sliderlabel">Stop Farbe</label>
-			<span id="dozestopcolorval" class="sliderspan"></span>
-			<br>
-			<input type="range" id="dozestartbrightness" style="background-image:linear-gradient(to right, black , white);" min="0" max="10" class="slider">
-	        <label for="dozestartbrightnessval" class="sliderlabel">Start Helligkeit</label>
-			<span id="dozestartbrightnessval" class="sliderspan"></span>
-			<br>
-			<input type="range" id="dozestopbrightness" style="background-image:linear-gradient(to right, black , white);" min="0" max="10" class="slider">
-	        <label for="dozestopbrightnessval" class="sliderlabel">Stop Helligkeit</label>
-			<span id="dozestopbrightnessval" class="sliderspan"></span>
-			<br>
-			<input type="range" id="dozepulsespeed" style="background-image:linear-gradient(to right, black , white);" min="0" max="10" class="slider">
-	        <label for="dozepulsespeedval" class="sliderlabel">Geschwindigkeit</label>
-			<span id="dozepulsespeedval" class="sliderspan"></span>
-			<br><br>
-			<input type="button" value="Speichern" onclick="configSave()"><input type="button" value="Reset" onclick="configReload()"><input type="button" value="Test" onclick="dozeTest()">
+            <h3>Timer</h3>
+            <label for="dozetime">Schlummern</label>
+            <input type="time" id="dozetime">
+            <label class="chkbxcontainer">
+                <input type="checkbox" id="dozeactive">
+                <span class="checkmark"></span>
+            </label>
+            <br>
+            <label for="waketime">Aufwachen</label>
+            <input type="time" id="waketime">
+            <label class="chkbxcontainer">
+                <input type="checkbox" id="wakeactive">
+                <span class="checkmark"></span>
+            </label>
+            <br>
+            <label for="morningtime">Aus</label>
+            <input type="time" id="morningtime">
+            <label class="chkbxcontainer">
+                <input type="checkbox" id="morningactive" checked disabled>
+                <span class="checkmark"></span>
+            </label>
+            <br>
+            <label for="noontime">Mittag</label>
+            <input type="time" id="noontime">
+            <label class="chkbxcontainer">
+                <input type="checkbox" id="noonactive">
+                <span class="checkmark"></span>
+            </label>
+            <br>
+            <label for="afternoontime">Aus</label>
+            <input type="time" id="afternoontime">
+            <label class="chkbxcontainer">
+                <input type="checkbox" id="afternoonactive" checked disabled>
+                <span class="checkmark"></span>
+            </label>
+            <br>
+            <label for="sleeptime">Schlafen</label>
+            <input type="time" id="sleeptime">
+            <label class="chkbxcontainer">
+                <input type="checkbox" id="sleepactive">
+                <span class="checkmark"></span>
+            </label>
+            <br><br>
+            <input type="button" value="Speichern" onclick="timeSave()"><input type="button" value="Reset" onclick="configLoad()">
+            <br>
           </p>
       </div>
-	  <div class="card">
+      <div class="card">
           <p>
-			<h3>Aufwachen</h3>
-			<input type="range" id="wakehue" style="background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%, rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%, rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%, rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%);" min="0" max="255" class="colorslider">
-			<label for="wakehueval" class="sliderlabel">Farbe</label>
-			<span id="wakehueval" class="sliderspan"></span>
-			<br>
-			<input type="range" id="wakebrightness" style="background-image:linear-gradient(to right, black , white);" min="0" max="10" class="slider">
-			<label for="wakebrightnessval" class="sliderlabel">Helligkeit</label>
-			<span id="wakebrightnessval" class="sliderspan"></span>
-			<br><br>
-			<input type="button" value="Speichern" onclick="configSave()"><input type="button" value="Reset" onclick="configReload()"><input type="button" value="Test" onclick="wakeTest()">
+            <h3>Nachtlicht</h3>
+            <input type="range" id="sleepyellowmin" style="background-image:linear-gradient(to right, red , yellow);" min="0" max="255" class="colorslider">
+            <label for="sleepyellowminval" class="sliderlabel">Basisfarbe</label>
+            <span id="sleepyellowminval" class="sliderspan"></span>
+            <br>
+            <input type="range" id="sleepyellowrange" style="background-image:linear-gradient(to right, black , yellow);" min="0" max="255" value="128" class="colorslider">
+            <label for="sleepyellowrangeval" class="sliderlabel">Reichweite</label>
+            <span id="sleepyellowrangeval" class="sliderspan"></span>
+            <br>
+            <input type="range" id="sleepbrightness" style="background-image:linear-gradient(to right, black , white);" min="0" max="10" class="slider">
+            <label for="sleepbrightnessval" class="sliderlabel">Helligkeit</label>
+            <span id="sleepbrightnessval" class="sliderspan"></span>
+            <br>
+            <input type="range" id="sleepspeed" style="background-image:linear-gradient(to right, black , white);" min="0" max="10" class="slider">
+            <label for="sleepseedval" class="sliderlabel">Geschwindigkeit</label>
+            <span id="sleepspeedval" class="sliderspan"></span>
+            <br><br>
+            <input type="button" value="Speichern" onclick="configSave()"><input type="button" value="Reset" onclick="configLoad()"><input type="button" value="Test" onclick="sleepTest()">
           </p>
       </div>
-	  <div class="card">
+      <div class="card">
           <p>
-			<h3>Manueller Modus</h3>
-			<input type="button" value="Start" onclick="startManual()">
+            <h3>Schlummern</h3>
+            <input type="range" id="dozestartcolor" style="background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%, rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%, rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%, rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%);" min="0" max="255" class="colorslider">
+            <label for="dozestartcolorval" class="sliderlabel">Start Farbe</label>
+            <span id="dozestartcolorval" class="sliderspan"></span>
+            <br>
+            <input type="range" id="dozestopcolor" style="background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%, rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%, rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%, rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%);" min="0" max="255" class="colorslider">
+            <label for="dozestopcolorval" class="sliderlabel">Stop Farbe</label>
+            <span id="dozestopcolorval" class="sliderspan"></span>
+            <br>
+            <input type="range" id="dozestartbrightness" style="background-image:linear-gradient(to right, black , white);" min="0" max="10" class="slider">
+            <label for="dozestartbrightnessval" class="sliderlabel">Start Helligkeit</label>
+            <span id="dozestartbrightnessval" class="sliderspan"></span>
+            <br>
+            <input type="range" id="dozestopbrightness" style="background-image:linear-gradient(to right, black , white);" min="0" max="10" class="slider">
+            <label for="dozestopbrightnessval" class="sliderlabel">Stop Helligkeit</label>
+            <span id="dozestopbrightnessval" class="sliderspan"></span>
+            <br>
+            <input type="range" id="dozepulsespeed" style="background-image:linear-gradient(to right, black , white);" min="0" max="10" class="slider">
+            <label for="dozepulsespeedval" class="sliderlabel">Geschwindigkeit</label>
+            <span id="dozepulsespeedval" class="sliderspan"></span>
+            <br><br>
+            <input type="button" value="Speichern" onclick="configSave()"><input type="button" value="Reset" onclick="configLoad()"><input type="button" value="Test" onclick="dozeTest()">
           </p>
-      </div>	  
+      </div>
+      <div class="card">
+          <p>
+            <h3>Aufwachen</h3>
+            <input type="range" id="wakehue" style="background: linear-gradient(90deg, rgba(255,0,0,1) 0%, rgba(255,154,0,1) 10%, rgba(208,222,33,1) 20%, rgba(79,220,74,1) 30%, rgba(63,218,216,1) 40%, rgba(47,201,226,1) 50%, rgba(28,127,238,1) 60%, rgba(95,21,242,1) 70%, rgba(186,12,248,1) 80%, rgba(251,7,217,1) 90%, rgba(255,0,0,1) 100%);" min="0" max="255" class="colorslider">
+            <label for="wakehueval" class="sliderlabel">Farbe</label>
+            <span id="wakehueval" class="sliderspan"></span>
+            <br>
+            <input type="range" id="wakebrightness" style="background-image:linear-gradient(to right, black , white);" min="0" max="10" class="slider">
+            <label for="wakebrightnessval" class="sliderlabel">Helligkeit</label>
+            <span id="wakebrightnessval" class="sliderspan"></span>
+            <br><br>
+            <input type="button" value="Speichern" onclick="configSave()"><input type="button" value="Reset" onclick="configLoad()"><input type="button" value="Test" onclick="wakeTest()">
+          </p>
+      </div>
     </div>
   </div>
   <div id="toastmsg"></div>
@@ -161,130 +161,151 @@
   /* Configuration */
 
   function getCfg() {
+  
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function() {
-  	if (this.readyState == 4 && this.status == 200) {
+      if (this.readyState == 4 && this.status == 200) {
 
-	var data = JSON.parse(this.responseText);
-	console.log("json: " + JSON.stringify(data));
+    var data = JSON.parse(this.responseText);
+    console.log("json received: " + JSON.stringify(data));
 
-	/* Timer */
-	document.getElementById("dozetime").value = data.dozetime;
-  	document.getElementById("waketime").value = data.waketime;
-	document.getElementById("morningtime").value = data.morningtime;
-	document.getElementById("noontime").value = data.noontime;
-	document.getElementById("afternoontime").value = data.afternoontime;
-	document.getElementById("sleeptime").value = data.sleeptime;
+    // Timer
+    document.getElementById("dozetime").value = data.dozetime;
+      document.getElementById("waketime").value = data.waketime;
+    document.getElementById("morningtime").value = data.morningtime;
+    document.getElementById("noontime").value = data.noontime;
+    document.getElementById("afternoontime").value = data.afternoontime;
+    document.getElementById("sleeptime").value = data.sleeptime;
 
-	document.getElementById("sleepactive").checked = data.sleepactive;
-	document.getElementById("dozeactive").checked = data.dozeactive;
-	document.getElementById("wakeactive").checked = data.wakeactive;
-	document.getElementById("noonactive").checked = data.noonactive;
+    document.getElementById("sleepactive").checked = data.sleepactive;
+    document.getElementById("dozeactive").checked = data.dozeactive;
+    document.getElementById("wakeactive").checked = data.wakeactive;
+    document.getElementById("noonactive").checked = data.noonactive;
 
-	/* Doze */
-	document.getElementById("dozepulsespeed").value = data.dozepulsespeed;
-	document.getElementById("dozepulsespeedval").innerHTML = data.dozepulsespeed;
-	document.getElementById("dozestartcolor").value = data.dozestartcolor;
-	document.getElementById("dozestartcolorval").innerHTML = data.dozestartcolor;
-	document.getElementById("dozestopcolor").value = data.dozestopcolor;
-	document.getElementById("dozestopcolorval").innerHTML = data.dozestopcolor;
-	document.getElementById("dozestartbrightness").value = data.dozestartbrightness;
-	document.getElementById("dozestartbrightnessval").innerHTML = data.dozestartbrightness;
-	document.getElementById("dozestopbrightness").value = data.dozestopbrightness;
-	document.getElementById("dozestopbrightnessval").innerHTML = data.dozestopbrightness;
+    // Doze
+    document.getElementById("dozepulsespeed").value = data.dozepulsespeed;
+    document.getElementById("dozepulsespeedval").innerHTML = data.dozepulsespeed;
+    document.getElementById("dozestartcolor").value = data.dozestartcolor;
+    document.getElementById("dozestartcolorval").innerHTML = data.dozestartcolor;
+    document.getElementById("dozestopcolor").value = data.dozestopcolor;
+    document.getElementById("dozestopcolorval").innerHTML = data.dozestopcolor;
+    document.getElementById("dozestartbrightness").value = data.dozestartbrightness;
+    document.getElementById("dozestartbrightnessval").innerHTML = data.dozestartbrightness;
+    document.getElementById("dozestopbrightness").value = data.dozestopbrightness;
+    document.getElementById("dozestopbrightnessval").innerHTML = data.dozestopbrightness;
 
-	/* Wake */
-	document.getElementById("wakehue").value = data.wakehue;
-	document.getElementById("wakehueval").innerHTML = data.wakehue;
-	document.getElementById("wakebrightness").value = data.wakebrightness;
-	document.getElementById("wakebrightnessval").innerHTML = data.wakebrightness;
+    // Wake
+    document.getElementById("wakehue").value = data.wakehue;
+    document.getElementById("wakehueval").innerHTML = data.wakehue;
+    document.getElementById("wakebrightness").value = data.wakebrightness;
+    document.getElementById("wakebrightnessval").innerHTML = data.wakebrightness;
 
-	/* Sleep */
-	document.getElementById("sleepyellowmin").value = data.sleepyellowmin;
-	document.getElementById("sleepyellowminval").innerHTML = data.sleepyellowmin;
-	document.getElementById("sleepyellowrange").value = data.sleepyellowrange;
-	document.getElementById("sleepyellowrangeval").innerHTML = data.sleepyellowrange;
-	document.getElementById("sleepbrightness").value = data.sleepbrightness;
-	document.getElementById("sleepbrightnessval").innerHTML = data.sleepbrightness;
-	document.getElementById("sleepspeed").value = data.sleepspeed;
-	document.getElementById("sleepspeedval").innerHTML = data.sleepspeed;
+    // Sleep
+    document.getElementById("sleepyellowmin").value = data.sleepyellowmin;
+    document.getElementById("sleepyellowminval").innerHTML = data.sleepyellowmin;
+    document.getElementById("sleepyellowrange").value = data.sleepyellowrange;
+    document.getElementById("sleepyellowrangeval").innerHTML = data.sleepyellowrange;
+    document.getElementById("sleepbrightness").value = data.sleepbrightness;
+    document.getElementById("sleepbrightnessval").innerHTML = data.sleepbrightness;
+    document.getElementById("sleepspeed").value = data.sleepspeed;
+    document.getElementById("sleepspeedval").innerHTML = data.sleepspeed;
 
-	/* Div */
-	document.getElementById("ip").innerHTML = data.ipaddress;
+    // Div
+    document.getElementById("ip").innerHTML = data.ipaddress;
 
-   	}
+       }
     };
     xhttp.open("GET", "/conf", true);
     xhttp.send();
   }
 
-  function configReload(event) {
-	var json = JSON.stringify({'action':"load"});
+  /* Load/Save Config */
+
+  function configLoad(event) {
   
-	websocket.send(json);
-	console.log("json: " + json);
-	
-	setTimeout(getCfg, 1000);
-	showToast("Konfiguration zurückgesetzt");
+    var json = JSON.stringify({'config':"load"});
+  
+    websocket.send(json);
+    console.log("json sent: " + json);
+    
+    setTimeout(getCfg, 100);
+    showToast("Konfiguration zurückgesetzt");
   }
 
   function configSave(event) {
-    var json = JSON.stringify({'action':"save"});
+  
+    var json = JSON.stringify({'config':"save"});
 
-	websocket.send(json);
-	console.log("json: " + json);
+    websocket.send(json);
+    console.log("json sent: " + json);
 
-	setTimeout(getCfg, 1000);
-	showToast("Konfiguration gespeichert");
+    setTimeout(getCfg, 100);
+    showToast("Konfiguration gespeichert");
   }
 
-  /* Websocket */
+  /* Manual Mode */
+
+  function startManual(event) {
+    
+    const manualtime = new Date();
+    const manuelepoch = Date.now();
+
+    var json = JSON.stringify({'manual':manuelepoch});
+    
+    websocket.send(json);
+    console.log("json sent: " + json);
+    showToast("Manueller Modus: " + manualtime.toLocaleString());
+  }
+
+  /* Network Settings */
 
   function netSave(event) {
-   	var devname = document.getElementById("devname").value;
-	var ssid    = document.getElementById("ssid").value;
-	var pass    = document.getElementById("pass").value; 
-	
-	var json	= JSON.stringify({ 'devname':devname,
-									'ssid':ssid,
-									'pass':pass});	
+  
+    var devname = document.getElementById("devname").value;
+    var ssid    = document.getElementById("ssid").value;
+    var pass    = document.getElementById("pass").value; 
+    
+    var json    = JSON.stringify({ 'devname':devname,
+                                    'ssid':ssid,
+                                    'pass':pass});    
 
-	websocket.send(json);
-	console.log("json: " + json);
-	
-	configSave();
+    websocket.send(json);
+    console.log("json sent: " + json);
+    
+    configSave();
 
-	setTimeout(function() {
-		window.location.href = '/ok.html';
-	}, 1500);					
+    window.location.href = '/ok.html';                    
   }
+  
+  /* Timer Settings */ 
 
   function timeSave(event) {
-	var dozetime      = document.getElementById("dozetime").value;
-	var waketime      = document.getElementById("waketime").value;
-	var morningtime   = document.getElementById("morningtime").value;
-	var noontime      = document.getElementById("noontime").value;
-	var afternoontime = document.getElementById("afternoontime").value;
-	var sleeptime     = document.getElementById("sleeptime").value;
-	var dozeactive    = document.getElementById("dozeactive").checked;
-	var wakeactive    = document.getElementById("wakeactive").checked;
-	var noonactive    = document.getElementById("noonactive").checked;
-	var sleepactive   = document.getElementById("sleepactive").checked;
+  
+    var dozetime      = document.getElementById("dozetime").value;
+    var waketime      = document.getElementById("waketime").value;
+    var morningtime   = document.getElementById("morningtime").value;
+    var noontime      = document.getElementById("noontime").value;
+    var afternoontime = document.getElementById("afternoontime").value;
+    var sleeptime     = document.getElementById("sleeptime").value;
+    var dozeactive    = document.getElementById("dozeactive").checked;
+    var wakeactive    = document.getElementById("wakeactive").checked;
+    var noonactive    = document.getElementById("noonactive").checked;
+    var sleepactive   = document.getElementById("sleepactive").checked;
 
-	var json = JSON.stringify({ 'dozetime':dozetime,
-								'waketime':waketime,
-								'morningtime':morningtime,
-								'noontime':noontime,
-								'afternoontime':afternoontime,
-								'sleeptime':sleeptime,
-								'dozeactive':dozeactive,
-								'wakeactive':wakeactive,
-								'noonactive':noonactive,
-								'sleepactive':sleepactive});
+    var json = JSON.stringify({ 'dozetime':dozetime,
+                                'waketime':waketime,
+                                'morningtime':morningtime,
+                                'noontime':noontime,
+                                'afternoontime':afternoontime,
+                                'sleeptime':sleeptime,
+                                'dozeactive':dozeactive,
+                                'wakeactive':wakeactive,
+                                'noonactive':noonactive,
+                                'sleepactive':sleepactive});
 
-	websocket.send(json);
-	console.log("json: " + json);
-	configSave();
+    websocket.send(json);
+    console.log("json sent: " + json);
+    configSave();
   }
 
   /* Sleep Settings */
@@ -293,24 +314,26 @@
   sleepyellowrange.addEventListener("input", function (event) { sleepChange(event); });
   sleepbrightness.addEventListener("input", function (event) { sleepChange(event); });
   sleepspeed.addEventListener("input", function (event) { sleepChange(event); });
+  
   function sleepChange(event) {
-	var sleepyellowmin = document.getElementById("sleepyellowmin").value;
-	var sleepyellowrange = document.getElementById("sleepyellowrange").value;
-	var sleepbrightness = document.getElementById("sleepbrightness").value;
-	var sleepspeed = document.getElementById("sleepspeed").value;
+  
+    var sleepyellowmin = document.getElementById("sleepyellowmin").value;
+    var sleepyellowrange = document.getElementById("sleepyellowrange").value;
+    var sleepbrightness = document.getElementById("sleepbrightness").value;
+    var sleepspeed = document.getElementById("sleepspeed").value;
 
-	var json = JSON.stringify({	'sleepyellowmin':sleepyellowmin, 
-								'sleepyellowrange':sleepyellowrange,
-								'sleepbrightness':sleepbrightness,
-								'sleepspeed':sleepspeed});
+    var json = JSON.stringify({    'sleepyellowmin':sleepyellowmin, 
+                                'sleepyellowrange':sleepyellowrange,
+                                'sleepbrightness':sleepbrightness,
+                                'sleepspeed':sleepspeed});
 
-	websocket.send(json);
-	console.log("json: " + json);
+    websocket.send(json);
+    console.log("json sent: " + json);
   }
 
   function sleepTest(event) {
-    websocket.send(JSON.stringify({'mode':'sleeptest'}));
-	showToast("Teste Schlafen-Modus (10s)");
+    websocket.send(JSON.stringify({'mode':'sleeptest'})); 
+    showToast("Teste Schlafen-Modus (10s)");
   }
 
   /* Doze Settings */
@@ -320,58 +343,50 @@
   dozestartbrightness.addEventListener("input", function (event) { dozeChange(event); });
   dozestopbrightness.addEventListener("input", function (event) { dozeChange(event); });
   dozepulsespeed.addEventListener("input", function (event) { dozeChange(event); });
+  
   function dozeChange(event) {
-	var dozestartcolor = document.getElementById("dozestartcolor").value;
-	var dozestopcolor = document.getElementById("dozestopcolor").value;
-	var dozestartbrightness = document.getElementById("dozestartbrightness").value;
-	var dozestopbrightness = document.getElementById("dozestopbrightness").value;
-	var dozepulsespeed = document.getElementById("dozepulsespeed").value;
+  
+    var dozestartcolor = document.getElementById("dozestartcolor").value;
+    var dozestopcolor = document.getElementById("dozestopcolor").value;
+    var dozestartbrightness = document.getElementById("dozestartbrightness").value;
+    var dozestopbrightness = document.getElementById("dozestopbrightness").value;
+    var dozepulsespeed = document.getElementById("dozepulsespeed").value;
 
-	var json = JSON.stringify({	'dozestartcolor':dozestartcolor, 
-								'dozestopcolor':dozestopcolor,
-								'dozestartbrightness':dozestartbrightness,
-								'dozestopbrightness':dozestopbrightness,
-								'dozepulsespeed':dozepulsespeed});
+    var json = JSON.stringify({    'dozestartcolor':dozestartcolor, 
+                                'dozestopcolor':dozestopcolor,
+                                'dozestartbrightness':dozestartbrightness,
+                                'dozestopbrightness':dozestopbrightness,
+                                'dozepulsespeed':dozepulsespeed});
 
-	websocket.send(json);
-	console.log("json: " + json);
+    websocket.send(json);
+    console.log("json sent: " + json);
   }
 
   function dozeTest(event) {
     websocket.send(JSON.stringify({'mode':'dozetest'}));
-	showToast("Teste Schlummern-Modus (10s)");
+    showToast("Teste Schlummern-Modus (10s)");
   }
 
   /* Wake Settings */
 
   wakehue.addEventListener("input", function (event) { wakeChange(event); });
   wakebrightness.addEventListener("input", function (event) { wakeChange(event); });
+  
   function wakeChange(event) {
-	var wakehue = document.getElementById("wakehue").value;
-	var wakebrightness = document.getElementById("wakebrightness").value;
+  
+    var wakehue = document.getElementById("wakehue").value;
+    var wakebrightness = document.getElementById("wakebrightness").value;
 
-	var json = JSON.stringify({'wakehue':wakehue,'wakebrightness':wakebrightness});
+    var json = JSON.stringify({'wakehue':wakehue,
+                               'wakebrightness':wakebrightness});
 
-	websocket.send(json);
-	console.log("json: " + json);
+    websocket.send(json);
+    console.log("json: " + json);
   }
 
   function wakeTest(event) {
     websocket.send(JSON.stringify({'mode':'waketest'}));
-	showToast("Teste Aufwachen-Modus (5s)");
-  }
-
-  /* Manual Mode */
-
-  function startManual(event) {
-	
-	const manualtime = new Date();
-	const manuelepoch = Date.now();
-
-	var json = JSON.stringify({'manual':manuelepoch});
-	console.log("json: " + json);
-	websocket.send(json);
-	showToast("Manueller Modus: " + manualtime.toLocaleString());
+    showToast("Teste Aufwachen-Modus (5s)");
   }
 
   /* Slider Values */
@@ -390,15 +405,22 @@
 
   // Sleep
 
-  var slmsli = document.getElementById("sleepyellowmin");
-  var slmout = document.getElementById("sleepyellowminval");
-  slmout.innerHTML = slmsli.value;
-  slmsli.oninput = function() { slmout.innerHTML = this.value; }
-
   var slrsli = document.getElementById("sleepyellowrange");
   var slrout = document.getElementById("sleepyellowrangeval");
   slrout.innerHTML = slrsli.value;
   slrsli.oninput = function() { slrout.innerHTML = this.value; }
+
+  var slmsli = document.getElementById("sleepyellowmin");
+  var slmout = document.getElementById("sleepyellowminval");
+  slmout.innerHTML = slmsli.value;
+  slmsli.oninput = function() { 
+    
+    slmout.innerHTML = this.value; 
+    
+    slrsli.max = 255 - this.value;
+    slrout.innerHTML = slrsli.value;
+      
+  }
 
   var sbrsli = document.getElementById("sleepbrightness");
   var sbrout = document.getElementById("sleepbrightnessval");
@@ -421,13 +443,13 @@
   var dpcout = document.getElementById("dozestopcolorval");
   dpcout.innerHTML = dpcsli.value;
   dpcsli.oninput = function() {
-	if ( +this.value < +dscsli.value ) {
-	    dpcsli.value = dscsli.value;
-		dpcout.innerHTML = dscsli.value;
-	}
-	else {
-		dpcout.innerHTML = this.value;
-	}
+    if ( +this.value < +dscsli.value ) {
+        dpcsli.value = dscsli.value;
+        dpcout.innerHTML = dscsli.value;
+    }
+    else {
+        dpcout.innerHTML = this.value;
+    }
   }
 
   var dsbsli = document.getElementById("dozestartbrightness");
@@ -449,7 +471,7 @@
 
   function initWebSocket() {
     console.log('Trying to open a WebSocket connection...');
-	websocket = new WebSocket(((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + "/ws");
+    websocket = new WebSocket(((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + "/ws");
     websocket.onopen    = onOpen;
     websocket.onclose   = onClose;
     websocket.onmessage = onMessage;
@@ -465,20 +487,20 @@
   }
 
   function onMessage(event) {
-	var data = JSON.parse(event.data);
-	console.log("json: " + JSON.stringify(data));
+    var data = JSON.parse(event.data);
+    console.log("json: " + JSON.stringify(data));
 
-	var devstr = data.devname + " Manager";
-	document.querySelector('title').textContent = devstr;
-	document.getElementById("head").innerHTML = "<h1>" + devstr + "</h1>";
+    var devstr = data.devname + " Manager";
+    document.querySelector('title').textContent = devstr;
+    document.getElementById("head").innerHTML = "<h1>" + devstr + "</h1>";
 
-	var utcSeconds = parseInt(data.epochTime);
-	var d = new Date(0);
-	d.setUTCSeconds(utcSeconds);
-	document.getElementById("time").innerHTML = d.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
-  	document.getElementById("date").innerHTML = d.toLocaleDateString();
+    var utcSeconds = parseInt(data.epochTime);
+    var d = new Date(0);
+    d.setUTCSeconds(utcSeconds);
+    document.getElementById("time").innerHTML = d.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+      document.getElementById("date").innerHTML = d.toLocaleDateString();
 
-	document.getElementById("statuscolor").style.backgroundColor = data.currentColor;
+    document.getElementById("statuscolor").style.backgroundColor = data.currentColor;
   }
 
   function nospaces(t){
@@ -490,7 +512,7 @@
   function showToast(event) {
     var x = document.getElementById("toastmsg");
     x.className = "show";
-	x.innerHTML = event;
+    x.innerHTML = event;
     setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
   }
 

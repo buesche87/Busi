@@ -22,6 +22,10 @@ p {
   overflow: hidden;
   background-color: #336699;
   box-shadow: 2px 2px 12px 1px rgba(140,140,140,.5);
+  width: 100%;
+  position: sticky;
+  z-index: 1;
+  top: 0;
 }
 
 body {
@@ -38,7 +42,7 @@ body {
   max-width: 600px;
   margin: 0 auto;
   display: grid;
-  grid-gap: 1rem;
+  grid-gap: 1.8rem;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
 }
 
@@ -268,9 +272,9 @@ label {
   border-radius: 4px;
   padding: 16px;
   position: fixed;
-  z-index: auto;
+  z-index: 1;
   left: 5%;
-  top: 30px;
+  bottom: 30px;
 }
 
 #toastmsg.show {
@@ -280,23 +284,23 @@ label {
 }
 
 @-webkit-keyframes fadein {
-  from {top: 0; opacity: 0;}
-  to {top: 30px; opacity: 1;}
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
 }
 
 @keyframes fadein {
-  from {top: 0; opacity: 0;}
-  to {top: 30px; opacity: 1;}
+  from {bottom: 0; opacity: 0;}
+  to {bottom: 30px; opacity: 1;}
 }
 
 @-webkit-keyframes fadeout {
-  from {top: 30px; opacity: 1;}
-  to {top: 0; opacity: 0;}
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
 }
 
 @keyframes fadeout {
-  from {top: 30px; opacity: 1;}
-  to {top: 0; opacity: 0;}
+  from {bottom: 30px; opacity: 1;}
+  to {bottom: 0; opacity: 0;}
 }
 
 /* Checkboxes */

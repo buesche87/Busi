@@ -53,8 +53,8 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
         Serial.println("TEST-Mode: DOZE");
         if (modus == CLOCK) {
           breakcycle = true;
+          prevmode = CLOCK;
         }
-        prevmode = modus;
         modus = TEST;
         testMode = DOZE;
         delay(10);
@@ -63,8 +63,8 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
         Serial.println("TEST-Mode: WAKE");
         if (modus == CLOCK) {
           breakcycle = true;
+          prevmode = CLOCK;
         }
-        prevmode = modus;
         modus = TEST;
         testMode = WAKE;
         delay(10);
@@ -73,28 +73,32 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
         Serial.println("TEST-Mode: SLEEP");
         if (modus == CLOCK) {
           breakcycle = true;
+          prevmode = CLOCK;
         }
-        prevmode = modus;
         modus = TEST;
         testMode = SLEEP;
         delay(10);
       }
     }
 
-    /* Config */
-    if (!json["action"].isNull()) {
-      const char *action = json["action"];
+    /* Configuration */
+    if (!json["config"].isNull()) {
+      const char *action = json["config"];
       if (strcmp(action, "save") == 0) {
-        Serial.println("Saving config");
+        Serial.println(); Serial.print("Saving config"); Serial.println();
         save_config();
       }
       if (strcmp(action, "load") == 0) {
-        Serial.println("Loading config");
+        Serial.println(); Serial.print("Loading config"); Serial.println();
         load_config();
+      }
+      if (strcmp(action, "reboot") == 0) {
+        Serial.println(); Serial.print("Rebooting"); Serial.println();
+        ESP.restart();
       }
     }
 
-    /* Network */
+    /* Network Settings */
     if (!json["devname"].isNull()) {
       if (!strcmp("", json["devname"]) == 0) {
         devname = json["devname"].as<String>();
@@ -140,6 +144,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       Serial.print("sleeptime: "); Serial.println(sleeptime);
     }
 
+    /* Active Settings */
     if (!json["dozeactive"].isNull()) {
       dozeactive = json["dozeactive"].as<bool>();
       Serial.print("dozeactive: "); Serial.println(dozeactive);
