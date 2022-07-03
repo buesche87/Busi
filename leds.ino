@@ -61,10 +61,12 @@ void led_wake() {
   FastLED.show();
 
   // Send currentColor to Webinterface
-  char currgb[7] = {0};
-  sprintf(currgb, "%02x%02x%02x", (long)rgb.r, (long)rgb.g, (long)rgb.b);
-  currentColor = String("#" + String(currgb)).c_str();
-  delay(10);
+  EVERY_N_MILLISECONDS(100) {  
+    char currgb[7] = {0};
+    sprintf(currgb, "%02x%02x%02x", (long)rgb.r, (long)rgb.g, (long)rgb.b);
+    currentColor = String("#" + String(currgb)).c_str();
+    notifyClients();
+  }
 }
 
 /* -- LED Sleep -- */
