@@ -20,33 +20,22 @@ void led_off() {
 
 void led_doze() {
 
-  // Color
-  float dstartc = dozestartbrightness * 25.5;
-  float dstopc  = dozestopbrightness * 25.5;
-  
-  float delta = (dstopc - dstartc) / 2.35040238;
+  // Color  
+  float delta = (dozestopbrightness - dozestartbrightness) / 2.35040238;
   float dV = ((exp(sin((dozepulsespeed) / 10 * millis() / 2000.0 * PI)) - 0.36787944) * delta);
 
-  val = dstartc + dV;
-  hue = map(val, dstartc, dstopc, dozestartcolor, dozestopcolor);
+  val = dozestartbrightness + dV;
+  hue = map(val, dozestartbrightness, dozestopbrightness, dozestartcolor, dozestopcolor);
   if ( (hue == -1) || (hue == 255) ) {
     hue = dozestartcolor;
   }
 
   CRGB rgb;
   hsv2rgb_spectrum(CHSV(hue, 255, 255), rgb);
-  
-  // Brightness
-  float dstartcb = dozestartbrightness * 10;
-  float dstopb  = dozestopbrightness * 10;  
-  
-  float brdelta = (dstopb - dstartcb) / 2.35040238;
-  float brdV = ((exp(sin((dozepulsespeed) / 10 * millis() / 2000.0 * PI)) - 0.36787944) * brdelta);
-  float brval = dstartcb + brdV;
-  
+
   // Show
   fill_solid(leds, NUM_LEDS, rgb);
-  FastLED.setBrightness(brval);
+  FastLED.setBrightness(val);
   FastLED.show();
 
   // Send currentColor to Webinterface
@@ -68,7 +57,7 @@ void led_wake() {
   
   // Show
   fill_solid(leds, NUM_LEDS, rgb);
-  FastLED.setBrightness(wakebrightness * 10);
+  FastLED.setBrightness(wakebrightness);
   FastLED.show();
 
   // Send currentColor to Webinterface
@@ -111,7 +100,7 @@ void led_sleep() {
     leds[random(NUM_LEDS)] = CRGB(r, g, b);
 
     // Show
-    FastLED.setBrightness(sleepbrightness * 10);
+    FastLED.setBrightness(sleepbrightness);
     FastLED.show();
 
     // Send currentColor to Webinterface
@@ -141,7 +130,7 @@ void led_sleep() {
     leds[random(NUM_LEDS)] = CRGB(r, g, b);
 
     // Show
-    FastLED.setBrightness(sleepbrightness * 10);
+    FastLED.setBrightness(sleepbrightness);
     FastLED.show();
 
     // Send currentColor to Webinterface

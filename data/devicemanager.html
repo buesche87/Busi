@@ -98,7 +98,7 @@
             <label for="sleepyellowrangeval" class="sliderlabel">Reichweite</label>
             <span id="sleepyellowrangeval" class="sliderspan"></span>
             <br>
-            <input type="range" id="sleepbrightness" style="background-image:linear-gradient(to right, black , white);" min="0" max="10" class="slider">
+            <input type="range" id="sleepbrightness" style="background-image:linear-gradient(to right, black , white);" min="0" max="255" class="slider">
             <label for="sleepbrightnessval" class="sliderlabel">Helligkeit</label>
             <span id="sleepbrightnessval" class="sliderspan"></span>
             <br>
@@ -120,11 +120,11 @@
             <label for="dozestopcolorval" class="sliderlabel">Stop Farbe</label>
             <span id="dozestopcolorval" class="sliderspan"></span>
             <br>
-            <input type="range" id="dozestartbrightness" style="background-image:linear-gradient(to right, black , white);" min="0" max="10" class="slider">
+            <input type="range" id="dozestartbrightness" style="background-image:linear-gradient(to right, black , white);" min="0" max="255" class="slider">
             <label for="dozestartbrightnessval" class="sliderlabel">Start Helligkeit</label>
             <span id="dozestartbrightnessval" class="sliderspan"></span>
             <br>
-            <input type="range" id="dozestopbrightness" style="background-image:linear-gradient(to right, black , white);" min="0" max="10" class="slider">
+            <input type="range" id="dozestopbrightness" style="background-image:linear-gradient(to right, black , white);" min="0" max="255" class="slider">
             <label for="dozestopbrightnessval" class="sliderlabel">Stop Helligkeit</label>
             <span id="dozestopbrightnessval" class="sliderspan"></span>
             <br>
@@ -142,7 +142,7 @@
             <label for="wakehueval" class="sliderlabel">Farbe</label>
             <span id="wakehueval" class="sliderspan"></span>
             <br>
-            <input type="range" id="wakebrightness" style="background-image:linear-gradient(to right, black , white);" min="0" max="10" class="slider">
+            <input type="range" id="wakebrightness" style="background-image:linear-gradient(to right, black , white);" min="0" max="255" class="slider">
             <label for="wakebrightnessval" class="sliderlabel">Helligkeit</label>
             <span id="wakebrightnessval" class="sliderspan"></span>
             <br><br>
@@ -333,7 +333,7 @@
 
   function sleepTest(event) {
     websocket.send(JSON.stringify({'mode':'sleeptest'})); 
-    showToast("Teste Schlafen-Modus (10s)");
+    showToast("Teste Schlafen-Modus (20s)");
   }
 
   /* Doze Settings */
@@ -364,7 +364,7 @@
 
   function dozeTest(event) {
     websocket.send(JSON.stringify({'mode':'dozetest'}));
-    showToast("Teste Schlummern-Modus (10s)");
+    showToast("Teste Schlummern-Modus (20s)");
   }
 
   /* Wake Settings */
@@ -386,7 +386,7 @@
 
   function wakeTest(event) {
     websocket.send(JSON.stringify({'mode':'waketest'}));
-    showToast("Teste Aufwachen-Modus (5s)");
+    showToast("Teste Aufwachen-Modus (10s)");
   }
 
   /* Slider Values */
@@ -442,15 +442,7 @@
   var dpcsli = document.getElementById("dozestopcolor");
   var dpcout = document.getElementById("dozestopcolorval");
   dpcout.innerHTML = dpcsli.value;
-  dpcsli.oninput = function() {
-    if ( +this.value < +dscsli.value ) {
-        dpcsli.value = dscsli.value;
-        dpcout.innerHTML = dscsli.value;
-    }
-    else {
-        dpcout.innerHTML = this.value;
-    }
-  }
+  dpcsli.oninput = function() { dpcout.innerHTML = this.value; }
 
   var dsbsli = document.getElementById("dozestartbrightness");
   var dsbout = document.getElementById("dozestartbrightnessval");

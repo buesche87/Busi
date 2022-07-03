@@ -174,7 +174,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
     if (!json["sleepbrightness"].isNull()) {
       sleepbrightness = int(json["sleepbrightness"]);
       Serial.print("sleepbrightness: "); Serial.println(sleepbrightness);
-      FastLED.setBrightness(sleepbrightness * 10);
+      FastLED.setBrightness(sleepbrightness);
     }
     if (!json["sleepspeed"].isNull()) {
       sleepspeed = int(json["sleepspeed"]);
@@ -210,7 +210,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
     }
     if (!json["wakebrightness"].isNull()) {
       wakebrightness = int(json["wakebrightness"]);
-      FastLED.setBrightness(wakebrightness * 10);
+      FastLED.setBrightness(wakebrightness);
       Serial.print("wakebrightness: "); Serial.println(wakebrightness);
     }    
   }

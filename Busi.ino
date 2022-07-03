@@ -316,7 +316,7 @@ void test(void) {
     breakcycle = false;
     starttime = millis();
     endtime = starttime;
-    while ((endtime - starttime) <= 10000) {
+    while ((endtime - starttime) <= 20000) {
       led_doze();
       endtime = millis();
     }
@@ -327,7 +327,7 @@ void test(void) {
     breakcycle = false;
     starttime = millis();
     endtime = starttime;
-    while ((endtime - starttime) <= 5000) {
+    while ((endtime - starttime) <= 10000) {
       led_wake();
       endtime = millis();
     }
@@ -338,7 +338,7 @@ void test(void) {
     breakcycle = false;
     starttime = millis();
     endtime = starttime;
-    while ((endtime - starttime) <= 10000) {
+    while ((endtime - starttime) <= 20000) {
       led_sleep();
       endtime = millis();
     }
