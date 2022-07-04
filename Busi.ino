@@ -43,8 +43,9 @@ int prevmode           = CLOCK;
 uint8_t currentState   = WAKE;       // Default LED mode
 int failCount          = 0;          // WiFi FailCount
 String currentColor    = "#000000";  // Color shown on Webinterface
-int testMode;                     // Testmode
-bool breakcycle        = false;      // Break for-loop if Test is clicked
+int testMode;                        // Testmode
+bool breakcycle        = false;      // Break led for-loop
+bool breaktest         = false;      // Break testmode while-loop
 int starttime;
 int endtime;
 
@@ -317,10 +318,14 @@ void test(void) {
     starttime = millis();
     endtime = starttime;
     while ((endtime - starttime) <= 20000) {
+      if (breaktest == true) {
+        breaktest = false;
+        break;
+      }
       led_doze();
       endtime = millis();
     }
-  modus = prevmode;
+    modus = prevmode;
   }
   
   else if (testMode == WAKE) {
@@ -328,10 +333,14 @@ void test(void) {
     starttime = millis();
     endtime = starttime;
     while ((endtime - starttime) <= 10000) {
+      if (breaktest == true) {
+        breaktest = false;
+        break;
+      }
       led_wake();
       endtime = millis();
     }
-  modus = prevmode;
+    modus = prevmode;
   }
   
   else if (testMode == SLEEP) {
@@ -339,10 +348,14 @@ void test(void) {
     starttime = millis();
     endtime = starttime;
     while ((endtime - starttime) <= 20000) {
+      if (breaktest == true) {
+        breaktest = false;
+        break;
+      }
       led_sleep();
       endtime = millis();
     }
-  modus = prevmode;
+    modus = prevmode;
   }
 }
 

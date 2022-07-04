@@ -157,6 +157,7 @@
 
   window.addEventListener('load', initWebSocket);
   window.addEventListener('load', getCfg);
+  var msg = ""
 
   /* Configuration */
 
@@ -224,23 +225,23 @@
   function configLoad(event) {
   
     var json = JSON.stringify({'config':"load"});
+	msg = "Konfiguration zurückgesetzt"
   
     websocket.send(json);
-    console.log("json sent: " + json);
-    
+    console.log("json sent: " + json);    
     setTimeout(getCfg, 100);
-    showToast("Konfiguration zurückgesetzt");
+    showToast(msg);
   }
 
   function configSave(event) {
   
     var json = JSON.stringify({'config':"save"});
+	msg = "Konfiguration gespeichert"
 
     websocket.send(json);
     console.log("json sent: " + json);
-
     setTimeout(getCfg, 100);
-    showToast("Konfiguration gespeichert");
+    showToast(msg);
   }
 
   /* Manual Mode */
@@ -249,12 +250,12 @@
     
     const manualtime = new Date();
     const manuelepoch = Date.now();
-
     var json = JSON.stringify({'manual':manuelepoch});
+	msg = "Manueller Modus: " + manualtime.toLocaleString();
     
     websocket.send(json);
     console.log("json sent: " + json);
-    showToast("Manueller Modus: " + manualtime.toLocaleString());
+    showToast(msg);
   }
 
   /* Network Settings */
@@ -303,7 +304,7 @@
                                 'noonactive':noonactive,
                                 'sleepactive':sleepactive});
 
-    websocket.send(json);
+	websocket.send(json);
     console.log("json sent: " + json);
     configSave();
   }
@@ -322,7 +323,7 @@
     var sleepbrightness = document.getElementById("sleepbrightness").value;
     var sleepspeed = document.getElementById("sleepspeed").value;
 
-    var json = JSON.stringify({    'sleepyellowmin':sleepyellowmin, 
+    var json = JSON.stringify({ 'sleepyellowmin':sleepyellowmin, 
                                 'sleepyellowrange':sleepyellowrange,
                                 'sleepbrightness':sleepbrightness,
                                 'sleepspeed':sleepspeed});
@@ -332,8 +333,13 @@
   }
 
   function sleepTest(event) {
-    websocket.send(JSON.stringify({'mode':'sleeptest'})); 
-    showToast("Teste Schlafen-Modus (20s)");
+  
+    var json = JSON.stringify({'mode':'sleeptest'});
+    msg = "Teste Schlafen-Modus (20s)"
+
+	websocket.send(json);
+    console.log("json sent: " + json);
+	showToast(msg);
   }
 
   /* Doze Settings */
@@ -363,8 +369,13 @@
   }
 
   function dozeTest(event) {
-    websocket.send(JSON.stringify({'mode':'dozetest'}));
-    showToast("Teste Schlummern-Modus (20s)");
+  
+    var json = JSON.stringify({'mode':'dozetest'});
+    msg = "Teste Schlummern-Modus (20s)"
+
+	websocket.send(json);
+    console.log("json sent: " + json);
+	showToast(msg);
   }
 
   /* Wake Settings */
@@ -385,8 +396,13 @@
   }
 
   function wakeTest(event) {
-    websocket.send(JSON.stringify({'mode':'waketest'}));
-    showToast("Teste Aufwachen-Modus (10s)");
+
+	var json = JSON.stringify({'mode':'waketest'});
+    msg = "Teste Aufwachen-Modus (10s)"
+
+	websocket.send(json);
+    console.log("json sent: " + json);
+	showToast(msg);
   }
 
   /* Slider Values */
@@ -415,11 +431,9 @@
   slmout.innerHTML = slmsli.value;
   slmsli.oninput = function() { 
     
-    slmout.innerHTML = this.value; 
-    
+    slmout.innerHTML = this.value;    
     slrsli.max = 255 - this.value;
     slrout.innerHTML = slrsli.value;
-      
   }
 
   var sbrsli = document.getElementById("sleepbrightness");
@@ -462,6 +476,7 @@
   /* Helpfunctions */
 
   function initWebSocket() {
+  
     console.log('Trying to open a WebSocket connection...');
     websocket = new WebSocket(((window.location.protocol === "https:") ? "wss://" : "ws://") + window.location.host + "/ws");
     websocket.onopen    = onOpen;
@@ -470,15 +485,18 @@
   }
 
   function onOpen(event) {
+  
     console.log('Connection opened');
   }
 
   function onClose(event) {
+  
     console.log('Connection closed');
     setTimeout(initWebSocket, 2000);
   }
 
   function onMessage(event) {
+  
     var data = JSON.parse(event.data);
     console.log("json: " + JSON.stringify(data));
 

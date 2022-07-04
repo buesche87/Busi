@@ -43,6 +43,8 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       setTime(utc);
       time_t local = myTZ.toLocal(utc, &tcr);
       Serial.print("manualepoch: "); Serial.println(utc);
+      breaktest = true;
+      prevmode = CLOCK;
       modus = CLOCK;
     }
 
@@ -51,9 +53,12 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       const char *action = json["mode"];
       if (strcmp(action, "dozetest") == 0) {
         Serial.println("TEST-Mode: DOZE");
+        breakcycle = true;
         if (modus == CLOCK) {
-          breakcycle = true;
           prevmode = CLOCK;
+        }
+        else if (modus == TEST) {
+          breaktest = true;
         }
         modus = TEST;
         testMode = DOZE;
@@ -61,9 +66,12 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       }
       if (strcmp(action, "waketest") == 0) {
         Serial.println("TEST-Mode: WAKE");
+        breakcycle = true;
         if (modus == CLOCK) {
-          breakcycle = true;
           prevmode = CLOCK;
+        }
+        else if (modus == TEST) {
+          breaktest = true;
         }
         modus = TEST;
         testMode = WAKE;
@@ -71,9 +79,12 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       }
       if (strcmp(action, "sleeptest") == 0) {
         Serial.println("TEST-Mode: SLEEP");
+        breakcycle = true;
         if (modus == CLOCK) {
-          breakcycle = true;
           prevmode = CLOCK;
+        }
+        else if (modus == TEST) {
+          breaktest = true;
         }
         modus = TEST;
         testMode = SLEEP;
