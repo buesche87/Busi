@@ -193,3 +193,25 @@ String getValue(String data, char separator, int index)
   }
   return found > index ? data.substring(strIndex[0], strIndex[1]) : "";
 }
+
+void changemode(int newmode, int testmode) {
+  
+  Serial.println();
+  Serial.print("Cur Mode: "); Serial.println(modus);
+  Serial.print("Prv Mode: "); Serial.println(prevmode);
+
+  if (modus == CLOCK) {
+    breakcycle = true;
+  }
+
+  if (modus == TEST) {
+    breakcycle = true;
+    breaktest = true;
+  }
+
+  modus = newmode;
+  testMode = testmode;
+  Serial.print("New Mode: "); Serial.println(modus);
+  notifyClients();
+  delay(10);
+}

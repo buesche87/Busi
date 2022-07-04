@@ -158,6 +158,7 @@
   window.addEventListener('load', initWebSocket);
   window.addEventListener('load', getCfg);
   var msg = ""
+  var modus = ""
 
   /* Configuration */
 
@@ -172,7 +173,7 @@
 
     // Timer
     document.getElementById("dozetime").value = data.dozetime;
-      document.getElementById("waketime").value = data.waketime;
+    document.getElementById("waketime").value = data.waketime;
     document.getElementById("morningtime").value = data.morningtime;
     document.getElementById("noontime").value = data.noontime;
     document.getElementById("afternoontime").value = data.afternoontime;
@@ -335,8 +336,14 @@
   function sleepTest(event) {
   
     var json = JSON.stringify({'mode':'sleeptest'});
-    msg = "Teste Schlafen-Modus (20s)"
-
+	
+	if (modus == 2) {
+	  msg = "Test gestoppt"
+    }
+	else {
+	  msg = "Teste Schlafen-Modus (20s)"
+	}
+	
 	websocket.send(json);
     console.log("json sent: " + json);
 	showToast(msg);
@@ -371,7 +378,13 @@
   function dozeTest(event) {
   
     var json = JSON.stringify({'mode':'dozetest'});
-    msg = "Teste Schlummern-Modus (20s)"
+
+	if (modus == 2) {
+	  msg = "Test gestoppt"
+    }
+	else {
+	  msg = "Teste Schlummern-Modus (20s)"
+	}
 
 	websocket.send(json);
     console.log("json sent: " + json);
@@ -398,7 +411,13 @@
   function wakeTest(event) {
 
 	var json = JSON.stringify({'mode':'waketest'});
-    msg = "Teste Aufwachen-Modus (10s)"
+
+	if (modus == 2) {
+	  msg = "Test gestoppt"
+    }
+	else {
+	  msg = "Teste Aufwachen-Modus (10s)"
+	}
 
 	websocket.send(json);
     console.log("json sent: " + json);
@@ -473,6 +492,30 @@
   dspout.innerHTML = dspsli.value;
   dspsli.oninput = function() { dspout.innerHTML = this.value; }
 
+  /* GetConfig */
+
+  function onMessage(event) {
+  
+    var data = JSON.parse(event.data);
+    console.log("json: " + JSON.stringify(data));
+
+    var devstr = data.devname + " Manager";
+    document.querySelector('title').textContent = devstr;
+    document.getElementById("head").innerHTML = "<h1>" + devstr + "</h1>";
+
+    var utcSeconds = parseInt(data.epochTime);
+    var d = new Date(0);
+    d.setUTCSeconds(utcSeconds);
+    document.getElementById("time").innerHTML = d.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
+      document.getElementById("date").innerHTML = d.toLocaleDateString();
+
+    document.getElementById("statuscolor").style.backgroundColor = data.currentColor;
+	
+	modus = data.modus;
+	
+  }
+
+
   /* Helpfunctions */
 
   function initWebSocket() {
@@ -495,23 +538,6 @@
     setTimeout(initWebSocket, 2000);
   }
 
-  function onMessage(event) {
-  
-    var data = JSON.parse(event.data);
-    console.log("json: " + JSON.stringify(data));
-
-    var devstr = data.devname + " Manager";
-    document.querySelector('title').textContent = devstr;
-    document.getElementById("head").innerHTML = "<h1>" + devstr + "</h1>";
-
-    var utcSeconds = parseInt(data.epochTime);
-    var d = new Date(0);
-    d.setUTCSeconds(utcSeconds);
-    document.getElementById("time").innerHTML = d.toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'});
-      document.getElementById("date").innerHTML = d.toLocaleDateString();
-
-    document.getElementById("statuscolor").style.backgroundColor = data.currentColor;
-  }
 
   function nospaces(t){
     if(t.value.match(/\s/g)){

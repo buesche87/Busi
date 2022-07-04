@@ -9,11 +9,11 @@
 void notifyClients() {
 
   if (globalClient != NULL && globalClient->status() == WS_CONNECTED) {
-    const uint8_t size = JSON_OBJECT_SIZE(10);
-    StaticJsonDocument<size> json;
+    StaticJsonDocument<128> json;
     json["devname"] = devname;
     json["epochTime"] = epochTime;
     json["currentColor"] = currentColor;
+    json["modus"] = modus;
 
     char data[1000];
     size_t len = serializeJson(json, data);
@@ -27,7 +27,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
   AwsFrameInfo *info = (AwsFrameInfo*)arg;
   if (info->final && info->index == 0 && info->len == len && info->opcode == WS_TEXT) {
 
-    StaticJsonDocument<2048> json;
+    StaticJsonDocument<512> json;
     DeserializationError err = deserializeJson(json, data);
     if (err) {
       Serial.print(F("deserializeJson() failed with code "));
@@ -42,56 +42,49 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       time_t utc = (manualepoch / 1000);
       setTime(utc);
       time_t local = myTZ.toLocal(utc, &tcr);
-      Serial.print("manualepoch: "); Serial.println(utc);
-      breaktest = true;
+      
+      changemode(CLOCK, OFF);
       prevmode = CLOCK;
-      modus = CLOCK;
+      Serial.print("Manual Epoch: "); Serial.println(utc);
     }
 
     /* Testmode */
     if (!json["mode"].isNull()) {
       const char *action = json["mode"];
+
+      // Dozetest
       if (strcmp(action, "dozetest") == 0) {
-        Serial.println("TEST-Mode: DOZE");
-        breakcycle = true;
-        if (modus == CLOCK) {
-          prevmode = CLOCK;
+        if (modus == TEST) {
+          changemode(prevmode, OFF);
         }
-        else if (modus == TEST) {
-          breaktest = true;
+        else {
+          changemode(TEST, DOZE);
         }
-        modus = TEST;
-        testMode = DOZE;
-        delay(10);
       }
-      if (strcmp(action, "waketest") == 0) {
-        Serial.println("TEST-Mode: WAKE");
-        breakcycle = true;
-        if (modus == CLOCK) {
-          prevmode = CLOCK;
-        }
-        else if (modus == TEST) {
-          breaktest = true;
-        }
-        modus = TEST;
-        testMode = WAKE;
-        delay(10);
-      }
+
+      // Sleeptest
       if (strcmp(action, "sleeptest") == 0) {
-        Serial.println("TEST-Mode: SLEEP");
-        breakcycle = true;
-        if (modus == CLOCK) {
-          prevmode = CLOCK;
+
+        if (modus == TEST) {
+          changemode(prevmode, OFF);
         }
-        else if (modus == TEST) {
-          breaktest = true;
+        else {
+          changemode(TEST, SLEEP);
         }
-        modus = TEST;
-        testMode = SLEEP;
-        delay(10);
+      }
+
+      // Waketest
+      if (strcmp(action, "waketest") == 0) {
+        
+        if (modus == TEST) {
+          changemode(prevmode, OFF);
+        }
+        else {
+          changemode(TEST, WAKE);
+        }
       }
     }
-
+    
     /* Configuration */
     if (!json["config"].isNull()) {
       const char *action = json["config"];
@@ -223,7 +216,7 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       wakebrightness = int(json["wakebrightness"]);
       FastLED.setBrightness(wakebrightness);
       Serial.print("wakebrightness: "); Serial.println(wakebrightness);
-    }    
+    }
   }
 }
 

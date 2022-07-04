@@ -12,6 +12,7 @@ void led_off() {
   FastLED.setBrightness(0);
   FastLED.show();
 
+  breakcycle = false;
   currentColor = "#000000";
   delay(100);
 }
@@ -60,6 +61,8 @@ void led_wake() {
   FastLED.setBrightness(wakebrightness);
   FastLED.show();
 
+  breakcycle = false;
+
   // Send currentColor to Webinterface
   EVERY_N_MILLISECONDS(100) {  
     char currgb[7] = {0};
@@ -73,6 +76,8 @@ void led_wake() {
 
 void led_sleep() {
 
+  Serial.print("breakcycle: "); Serial.println(breakcycle);
+  
   // Color
   sleepyellowmax = sleepyellowmin + sleepyellowrange;
   if (sleepyellowmax >= 255) {
@@ -88,6 +93,7 @@ void led_sleep() {
   for (int i = sleepyellowint; i <= randmax; i++) {
 
     if (breakcycle == true) {
+      breakcycle = false;
       break;
     }
 
@@ -118,6 +124,7 @@ void led_sleep() {
   for (int i = sleepyellowint; i >= randmin; i--) {
 
     if (breakcycle == true) {
+      breakcycle = false;
       break;
     }
 
@@ -158,7 +165,7 @@ void led_program() {
   fill_solid(leds, NUM_LEDS, rgb);
   FastLED.setBrightness(100);
   FastLED.show();
-
+  
   // Send currentColor to Webinterface
   EVERY_N_MILLISECONDS(100) {
     char currgb[7] = {0};

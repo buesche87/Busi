@@ -14,7 +14,7 @@ void start_webserver() {
 
   /* Config */
   server.on("/conf", HTTP_GET, [](AsyncWebServerRequest * request) {
-    StaticJsonDocument<2048> cfgjson;
+    StaticJsonDocument<512> cfgjson;
     cfgjson["dozetime"] = dozetime;
     cfgjson["waketime"] = waketime;
     cfgjson["morningtime"] = morningtime;

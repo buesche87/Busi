@@ -39,11 +39,12 @@ CRGB leds[NUM_LEDS];
 const char *configfile = "/config.json";
 const char* timeserver = "pool.ntp.org";
 int modus              = CLOCK;      // Start mode (CLOCK | PROGRAM)
-int prevmode           = CLOCK; 
+int prevmode           = CLOCK;      // Previous mode
+int testMode           = OFF;        // Testmode
 uint8_t currentState   = WAKE;       // Default LED mode
 int failCount          = 0;          // WiFi FailCount
 String currentColor    = "#000000";  // Color shown on Webinterface
-int testMode;                        // Testmode
+
 bool breakcycle        = false;      // Break led for-loop
 bool breaktest         = false;      // Break testmode while-loop
 int starttime;
@@ -137,12 +138,13 @@ void setup(void) {
   if (wifi_connect()) {
     led_off();
     modus = CLOCK;
+    prevmode = CLOCK;
     timeClient.begin();
     getTime();
   }
   else {
     modus = PROGRAM;
-    prevmode = modus;
+    prevmode = PROGRAM;
     WiFi.softAP(devname.c_str(), NULL);
     IPAddress IP = WiFi.softAPIP();
     sprintf(ipaddress, "%d.%d.%d.%d", IP[0], IP[1], IP[2], IP[3]);
@@ -210,11 +212,6 @@ void run(void) {
     }
   }
 
-  /* Notify Websocket Clients */
-  EVERY_N_SECONDS(5) {
-    notifyClients();
-  }
-
   /* Convert Local Time */
   time_t utc = now();
   time_t local = myTZ.toLocal(utc, &tcr);
@@ -237,6 +234,7 @@ void run(void) {
     Serial.println((String)"Sleep-Time: " + big_time(sleeptime) + " (" + sleeptime + ")");
     Serial.print((String)"Current State: " + currentState);
     Serial.println();
+    notifyClients();
   }
 
   /* Goto Doze-Time */
@@ -314,7 +312,6 @@ void program(void) {
 void test(void) {
 
   if (testMode == DOZE) {
-    breakcycle = false;
     starttime = millis();
     endtime = starttime;
     while ((endtime - starttime) <= 20000) {
@@ -329,7 +326,6 @@ void test(void) {
   }
   
   else if (testMode == WAKE) {
-    breakcycle = false;
     starttime = millis();
     endtime = starttime;
     while ((endtime - starttime) <= 10000) {
@@ -344,7 +340,6 @@ void test(void) {
   }
   
   else if (testMode == SLEEP) {
-    breakcycle = false;
     starttime = millis();
     endtime = starttime;
     while ((endtime - starttime) <= 20000) {
