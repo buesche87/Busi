@@ -92,7 +92,7 @@ uint8_t sleepbrightness;
 uint8_t sleepspeed;
 
 /* Program animation */
-uint8_t prghue;;
+uint8_t prghue;
 
 /*  Webserver */
 AsyncWebServer server(80);
