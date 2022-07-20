@@ -76,7 +76,7 @@ void led_wake() {
 
 void led_sleep() {
 
-  // Serial.print("breakcycle: "); Serial.println(breakcycle);
+  Serial.print("breakcycle: "); Serial.println(breakcycle);
   
   // Color
   sleepyellowmax = sleepyellowmin + sleepyellowrange;
@@ -93,7 +93,6 @@ void led_sleep() {
   for (int i = sleepyellowint; i <= randmax; i++) {
 
     if (breakcycle == true) {
-      breakcycle = false;
       break;
     }
 
@@ -124,7 +123,6 @@ void led_sleep() {
   for (int i = sleepyellowint; i >= randmin; i--) {
 
     if (breakcycle == true) {
-      breakcycle = false;
       break;
     }
 
@@ -150,6 +148,8 @@ void led_sleep() {
     
     delay(random(500, 1000) / sleepspeed);
   }
+
+  breakcycle = false;
 }
 
 /* -- LED Program -- */
