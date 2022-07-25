@@ -105,6 +105,10 @@
             <input type="range" id="sleepspeed" style="background-image:linear-gradient(to right, black , white);" min="0" max="10" class="slider">
             <label for="sleepseedval" class="sliderlabel">Geschwindigkeit</label>
             <span id="sleepspeedval" class="sliderspan"></span>
+			<br>
+            <input type="range" id="sleepofftimer" style="background-image:linear-gradient(to right, black , white);" min="0" max="240" class="slider">
+            <label for="sleepofftimerval" class="sliderlabel">Aus-Timer (Minuten)</label>
+            <span id="sleepofftimerval" class="sliderspan"></span>
             <br><br>
             <input type="button" value="Speichern" onclick="configSave()"><input type="button" value="Reset" onclick="configLoad()"><input type="button" value="Test" onclick="sleepTest()">
           </p>
@@ -211,6 +215,8 @@
     document.getElementById("sleepbrightnessval").innerHTML = data.sleepbrightness;
     document.getElementById("sleepspeed").value = data.sleepspeed;
     document.getElementById("sleepspeedval").innerHTML = data.sleepspeed;
+	document.getElementById("sleepofftimer").value = data.sleepofftimer;
+	document.getElementById("sleepofftimerval").innerHTML = data.sleepofftimer;
 
     // Div
     document.getElementById("ip").innerHTML = data.ipaddress;
@@ -316,6 +322,7 @@
   sleepyellowrange.addEventListener("input", function (event) { sleepChange(event); });
   sleepbrightness.addEventListener("input", function (event) { sleepChange(event); });
   sleepspeed.addEventListener("input", function (event) { sleepChange(event); });
+  sleepofftimer.addEventListener("input", function (event) { sleepChange(event); });
   
   function sleepChange(event) {
   
@@ -323,11 +330,13 @@
     var sleepyellowrange = document.getElementById("sleepyellowrange").value;
     var sleepbrightness = document.getElementById("sleepbrightness").value;
     var sleepspeed = document.getElementById("sleepspeed").value;
+	var sleepofftimer = document.getElementById("sleepofftimer").value;
 
     var json = JSON.stringify({ 'sleepyellowmin':sleepyellowmin, 
                                 'sleepyellowrange':sleepyellowrange,
                                 'sleepbrightness':sleepbrightness,
-                                'sleepspeed':sleepspeed});
+                                'sleepspeed':sleepspeed,
+								'sleepofftimer':sleepofftimer});
 
     websocket.send(json);
     console.log("json sent: " + json);
@@ -365,7 +374,7 @@
     var dozestopbrightness = document.getElementById("dozestopbrightness").value;
     var dozepulsespeed = document.getElementById("dozepulsespeed").value;
 
-    var json = JSON.stringify({    'dozestartcolor':dozestartcolor, 
+    var json = JSON.stringify({ 'dozestartcolor':dozestartcolor, 
                                 'dozestopcolor':dozestopcolor,
                                 'dozestartbrightness':dozestartbrightness,
                                 'dozestopbrightness':dozestopbrightness,
@@ -464,6 +473,11 @@
   var sspout = document.getElementById("sleepspeedval");
   sspout.innerHTML = sspsli.value;
   sspsli.oninput = function() { sspout.innerHTML = this.value; }
+
+  var sofsli = document.getElementById("sleepofftimer");
+  var sofout = document.getElementById("sleepofftimerval");
+  sofout.innerHTML = sofsli.value;
+  sofsli.oninput = function() { sofout.innerHTML = this.value; }
 
   // Doze
 

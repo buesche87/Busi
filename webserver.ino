@@ -21,21 +21,22 @@ void start_webserver() {
     cfgjson["noontime"] = noontime;
     cfgjson["afternoontime"] = afternoontime;
     cfgjson["sleeptime"] = sleeptime;
-    cfgjson["wakebrightness"] = wakebrightness;
-    cfgjson["sleepbrightness"] = sleepbrightness;
-    cfgjson["sleepspeed"] = sleepspeed;
     cfgjson["dozeactive"] = dozeactive;
     cfgjson["wakeactive"] = wakeactive;
     cfgjson["noonactive"] = noonactive;
     cfgjson["sleepactive"] = sleepactive;
-    cfgjson["wakehue"] = wakehue;
     cfgjson["sleepyellowmin"] = sleepyellowmin;
-    cfgjson["sleepyellowrange"] = sleepyellowrange;
+    cfgjson["sleepyellowrange"] = sleepyellowrange;   
+    cfgjson["sleepbrightness"] = sleepbrightness;
+    cfgjson["sleepspeed"] = sleepspeed;
+    cfgjson["sleepofftimer"] = sleepofftimer;
     cfgjson["dozestartcolor"] = dozestartcolor;
     cfgjson["dozestopcolor"] = dozestopcolor;
     cfgjson["dozestartbrightness"] = dozestartbrightness;
     cfgjson["dozestopbrightness"] = dozestopbrightness;
     cfgjson["dozepulsespeed"] = dozepulsespeed;
+    cfgjson["wakehue"] = wakehue;
+    cfgjson["wakebrightness"] = wakebrightness;
     cfgjson["ipaddress"] = ipaddress;
 
     String response;

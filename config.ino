@@ -44,6 +44,7 @@ void load_config() {
   sleepyellowrange = Load_Json("sleepyellowrange").toInt();
   sleepbrightness = Load_Json("sleepbrightness").toInt();
   sleepspeed = Load_Json("sleepspeed").toInt();
+  sleepofftimer = Load_Json("sleepofftimer").toInt();
 
   if (Load_Json("noonactive") == "true") {
     noonactive = true;
@@ -73,6 +74,7 @@ void save_config() {
   Save_Json_Int("sleepyellowrange", sleepyellowrange);
   Save_Json_Int("sleepbrightness", sleepbrightness);
   Save_Json_Int("sleepspeed", sleepspeed);
+  Save_Json_Int("sleepofftimer", sleepofftimer);
 
   Save_Json_Int("dozestartcolor", dozestartcolor);
   Save_Json_Int("dozestopcolor", dozestopcolor);

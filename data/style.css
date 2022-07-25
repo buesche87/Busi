@@ -120,7 +120,7 @@ input[type=text], input[type=number], input[type=password], input[type=time], se
   text-align: center;
 }
 
-input[type=submit],input[type=button] {
+input[type=submit], input[type=button] {
   border: none;
   color: white;
   background-color: #336699;
@@ -141,6 +141,10 @@ input[type=submit]:hover, input[type=button]:hover {
   background-color: #6699CC;
 }
 
+input[type=number] {
+	width: 20%;
+}
+
 input[type=time] {
   width: 45%;
 }
@@ -149,6 +153,13 @@ input[type=time] {
 
 label {
   width: 120px;
+  display: inline-block;
+  text-align: left;
+  font-size: 1.2rem;
+}
+
+.timerlabel {
+  width: 200px;
   display: inline-block;
   text-align: left;
   font-size: 1.2rem;

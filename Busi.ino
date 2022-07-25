@@ -38,11 +38,11 @@ CRGB leds[NUM_LEDS];
 /* Defaults */
 const char *configfile = "/config.json";
 const char* timeserver = "pool.ntp.org";
-int modus              = CLOCK;      // Start mode (CLOCK | PROGRAM)
-int prevmode           = CLOCK;      // Previous mode
-int testMode           = OFF;        // Testmode
+uint8_t modus          = CLOCK;      // Start mode (CLOCK | PROGRAM)
+uint8_t prevmode       = CLOCK;      // Previous mode
+uint8_t testMode       = OFF;        // Testmode
 uint8_t currentState   = WAKE;       // Default LED mode
-int failCount          = 0;          // WiFi FailCount
+uint8_t failCount      = 0;          // WiFi FailCount
 String currentColor    = "#000000";  // Color shown on Webinterface
 
 bool breakcycle        = false;      // Break led for-loop
@@ -90,9 +90,13 @@ uint8_t sleepyellowmax;
 uint8_t sleepyellowrange;
 uint8_t sleepbrightness;
 uint8_t sleepspeed;
+uint8_t sleepofftimer;
 
 /* Program animation */
-uint8_t prghue;;
+uint8_t prghue;
+
+/* time */
+unsigned long epochTime;
 
 /*  Webserver */
 AsyncWebServer server(80);
@@ -102,7 +106,6 @@ AsyncWebSocketClient * globalClient = NULL;
 /*  NTP Clinet */
 WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, timeserver);
-unsigned long epochTime;
 
 /*  Timezone Settings */
 TimeChangeRule myDST = {"CDT", Second, Sun, Mar, 2, +120};   // Daylight time = UTC + 2 hours
@@ -186,6 +189,7 @@ void loop(void) {
     program();
   }
 
+  /* Test Mode */
   else if (modus == TEST) {
     test();
   }
@@ -238,59 +242,68 @@ void run(void) {
   }
 
   /* Goto Doze-Time */
-  if ((rn >= big_time(dozetime)) && (rn < big_time(waketime))) {
-    if (dozeactive == true) {
-      set_light_state(DOZE);
-    }
-    else if (sleepactive == true) {
-      set_light_state(SLEEP);
-    }
-    else {
-      set_light_state(OFF);
-    }
+  if ( (rn >= big_time(dozetime)) && (rn < big_time(waketime)) && dozeactive == true ) {
+    set_light_state(DOZE);
   }
-
   /* Goto Wake-Time */
-  if ((rn >= big_time(waketime)) && (rn < big_time(morningtime))) {
-    if (wakeactive == true) {
-      set_light_state(WAKE);
-    }
-    else {
+  else if ( (rn >= big_time(waketime)) && (rn < big_time(morningtime)) && wakeactive == true ) {
+    set_light_state(WAKE);
+  }
+  /* Goto Noon-Time */
+  else if ( (rn >= big_time(noontime)) && (rn < big_time(afternoontime)) && noonactive == true ) {
+    if (sleepofftimer > 0 && (rn > big_time(noontime) + sleepofftimer) ) {
       set_light_state(OFF);
     }
-  }
-
-  /* Goto Morning-Time */
-  if ((rn >= big_time(morningtime)) && (rn < big_time(noontime))) {
-    set_light_state(OFF);
-  }
-
-  /* Goto Noon-Time */
-  if ((rn >= big_time(noontime)) && (rn < big_time(afternoontime))) {
-    if (noonactive == true) {
+    else {
       set_light_state(SLEEP);
     }
-    else {
-      set_light_state(OFF);
-    }
-  }
-
-  /* Goto Afternoon-Time */
-  if ((rn >= big_time(afternoontime)) && (rn < big_time(sleeptime))) {
-    set_light_state(OFF);
   }
 
   /* Goto Sleep-Time */
-  if (((rn >= big_time(sleeptime)) || (rn < big_time(dozetime)))) {
-    if (sleepactive == true) {
-      set_light_state(SLEEP);
+  else if ( ((rn >= big_time(sleeptime)) || (rn < big_time(dozetime))) && sleepactive == true ) {
+
+    if (sleepofftimer > 0) {
+      EVERY_N_SECONDS(5) {
+        /* Calculate offtime */
+        int offtime;
+        bool midnight;
+
+        /* After midnight */
+        if (big_time(sleeptime) + sleepofftimer > 1440) {
+          offtime = big_time(sleeptime) + sleepofftimer - 1440;
+          midnight = true;
+        }
+        /* Before midnight */
+        else {
+          offtime = big_time(sleeptime) + sleepofftimer;
+          midnight = false;
+        }
+
+        Serial.print("offtime: "); Serial.println(offtime);
+
+        if (rn < offtime && midnight == false) {
+          set_light_state(SLEEP);
+        }
+        else if ( rn < big_time(sleeptime) && rn < offtime && midnight == true ) {
+          set_light_state(SLEEP);
+        }
+        else {
+          set_light_state(OFF);
+        }
+      }
     }
     else {
+      set_light_state(SLEEP);
+    }
+  }
+
+  /* Else OFF */
+  else {
+    EVERY_N_SECONDS(5) {
       set_light_state(OFF);
     }
   }
 }
-
 /*
    -------------------
    Program Mode
@@ -324,7 +337,7 @@ void test(void) {
     }
     modus = prevmode;
   }
-  
+
   else if (testMode == WAKE) {
     starttime = millis();
     endtime = starttime;
@@ -338,7 +351,7 @@ void test(void) {
     }
     modus = prevmode;
   }
-  
+
   else if (testMode == SLEEP) {
     starttime = millis();
     endtime = starttime;

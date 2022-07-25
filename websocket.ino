@@ -184,6 +184,11 @@ void handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
       sleepspeed = int(json["sleepspeed"]);
       Serial.print("sleepspeed: "); Serial.println(sleepspeed);
     }
+    if (!json["sleepofftimer"].isNull()) {
+      sleepofftimer = int(json["sleepofftimer"]);
+      Serial.print("sleepofftimer: "); Serial.println(sleepofftimer);
+    }
+
 
     /* Doze Settings */
     if (!json["dozestartcolor"].isNull()) {

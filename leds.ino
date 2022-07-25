@@ -75,8 +75,6 @@ void led_wake() {
 /* -- LED Sleep -- */
 
 void led_sleep() {
-
-  Serial.print("breakcycle: "); Serial.println(breakcycle);
   
   // Color
   sleepyellowmax = sleepyellowmin + sleepyellowrange;

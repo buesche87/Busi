@@ -13,29 +13,29 @@ bool wifi_connect() {
     return false;
   }
 
-    Serial.print("Connecting to: "); Serial.println(ssid);
-  
-    WiFi.mode(WIFI_STA);
-    WiFi.begin(ssid.c_str(), pass.c_str());
-  
-    while (WiFi.status() != WL_CONNECTED) {
-      led_blink();
-      Serial.print(".");
-      failCount++;
-      if (failCount == wifiretry)
-      {
-        Serial.print("Failed connecting to Wifi after: "); Serial.print(failCount);
-        Serial.print(" tries"); Serial.println();
-        return false;
-      }
+  Serial.print("Connecting to: "); Serial.println(ssid);
+
+  WiFi.mode(WIFI_STA);
+  WiFi.begin(ssid.c_str(), pass.c_str());
+
+  while (WiFi.status() != WL_CONNECTED) {
+    led_blink();
+    Serial.print(".");
+    failCount++;
+    if (failCount == wifiretry)
+    {
+      Serial.print("Failed connecting to Wifi after: "); Serial.print(failCount);
+      Serial.print(" tries"); Serial.println();
+      return false;
     }
-  
-    Serial.println();
-    Serial.print("WiFi connected: "); Serial.println(WiFi.localIP());
-    IPAddress IP = WiFi.localIP();
-    sprintf(ipaddress, "%d.%d.%d.%d", IP[0], IP[1], IP[2], IP[3]);
-    failCount = 0;
-    return true;
+  }
+
+  Serial.println();
+  Serial.print("WiFi connected: "); Serial.println(WiFi.localIP());
+  IPAddress IP = WiFi.localIP();
+  sprintf(ipaddress, "%d.%d.%d.%d", IP[0], IP[1], IP[2], IP[3]);
+  failCount = 0;
+  return true;
 
 }
 
@@ -142,8 +142,8 @@ void getTime() {
     else break;
   }
   Serial.println();
-  Serial.print("Current Epoch-Time: "); Serial.println(epochTime); 
-  
+  Serial.print("Current Epoch-Time: "); Serial.println(epochTime);
+
   setTime(epochTime);
 }
 
@@ -195,7 +195,7 @@ String getValue(String data, char separator, int index)
 }
 
 void changemode(int newmode, int testmode) {
-  
+
   Serial.println();
   Serial.print("Cur Mode: "); Serial.println(modus);
   Serial.print("Prv Mode: "); Serial.println(prevmode);
