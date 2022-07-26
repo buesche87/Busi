@@ -21,7 +21,7 @@ void led_off() {
 
 void led_doze() {
 
-  // Color  
+  // Color
   float delta = (dozestopbrightness - dozestartbrightness) / 2.35040238;
   float dV = ((exp(sin((dozepulsespeed) / 10 * millis() / 2000.0 * PI)) - 0.36787944) * delta);
 
@@ -41,10 +41,7 @@ void led_doze() {
 
   // Send currentColor to Webinterface
   EVERY_N_MILLISECONDS(100) {
-    char currgb[7] = {0};
-    sprintf(currgb, "%02x%02x%02x", (long)rgb.r, (long)rgb.g, (long)rgb.b);
-    currentColor = String("#" + String(currgb)).c_str();
-    notifyClients();
+    send_color(rgb);
   }
 }
 
@@ -55,7 +52,7 @@ void led_wake() {
   // Color
   CRGB rgb;
   hsv2rgb_spectrum(CHSV(wakehue, 255, 255), rgb);
-  
+
   // Show
   fill_solid(leds, NUM_LEDS, rgb);
   FastLED.setBrightness(wakebrightness);
@@ -64,28 +61,25 @@ void led_wake() {
   breakcycle = false;
 
   // Send currentColor to Webinterface
-  EVERY_N_MILLISECONDS(100) {  
-    char currgb[7] = {0};
-    sprintf(currgb, "%02x%02x%02x", (long)rgb.r, (long)rgb.g, (long)rgb.b);
-    currentColor = String("#" + String(currgb)).c_str();
-    notifyClients();
+  EVERY_N_MILLISECONDS(100) {
+    send_color(rgb);
   }
 }
 
 /* -- LED Sleep -- */
 
 void led_sleep() {
-  
+
   // Color
   sleepyellowmax = sleepyellowmin + sleepyellowrange;
   if (sleepyellowmax >= 255) {
     sleepyellowmax = 255;
   }
   int randmax = random(sleepyellowmin, sleepyellowmax);
-  int randmin = random(sleepyellowmin, sleepyellowmax-randmax);
+  int randmin = random(sleepyellowmin, sleepyellowmax - randmax);
   if (randmin >= randmax) {
     randmin = randmax;
-  }  
+  }
 
   // Animation+
   for (int i = sleepyellowint; i <= randmax; i++) {
@@ -99,21 +93,18 @@ void led_sleep() {
     int b = 0;
     sleepyellowint = i;
 
-    leds[random(NUM_LEDS)] = CRGB(r, g, b);
-    leds[random(NUM_LEDS)] = CRGB(r, g, b);
-    leds[random(NUM_LEDS)] = CRGB(r, g, b);
-    leds[random(NUM_LEDS)] = CRGB(r, g, b);
+    CRGB rgb = CRGB(r, g, b);
+
+    for (int i=4; i=0; i--) {
+      leds[random(NUM_LEDS)] = rgb;
+    }
 
     // Show
     FastLED.setBrightness(sleepbrightness);
     FastLED.show();
 
     // Send currentColor to Webinterface
-    char currgb[7] = {0};
-    sprintf(currgb, "%02x%02x%02x", r, g, b);
-    currentColor = String("#" + String(currgb)).c_str();
-    notifyClients();
-    
+    send_color(rgb);
     delay(random(500, 1000) / sleepspeed);
   }
 
@@ -129,21 +120,18 @@ void led_sleep() {
     int b = 0;
     sleepyellowint = i;
 
-    leds[random(NUM_LEDS)] = CRGB(r, g, b);
-    leds[random(NUM_LEDS)] = CRGB(r, g, b);
-    leds[random(NUM_LEDS)] = CRGB(r, g, b);
-    leds[random(NUM_LEDS)] = CRGB(r, g, b);
+    CRGB rgb = CRGB(r, g, b);
+
+    for (int i=4; i=0; i--) {
+      leds[random(NUM_LEDS)] = rgb;
+    }
 
     // Show
     FastLED.setBrightness(sleepbrightness);
     FastLED.show();
 
     // Send currentColor to Webinterface
-    char currgb[7] = {0};
-    sprintf(currgb, "%02x%02x%02x", r, g, b);
-    currentColor = String("#" + String(currgb)).c_str();
-    notifyClients();
-    
+    send_color(rgb);
     delay(random(500, 1000) / sleepspeed);
   }
 
@@ -155,21 +143,18 @@ void led_sleep() {
 void led_program() {
 
   // Animation
-  prghue = beatsin8(18, 0, 32);
-  CRGB rgb;
-  hsv2rgb_rainbow(CHSV(prghue, 255, 255), rgb);
+  prghue = beatsin8(18, 0, 36);
 
   // Show
-  fill_solid(leds, NUM_LEDS, rgb);
+  fill_solid(leds, NUM_LEDS, CHSV(prghue, 255, 255));
   FastLED.setBrightness(100);
   FastLED.show();
-  
+
   // Send currentColor to Webinterface
   EVERY_N_MILLISECONDS(100) {
-    char currgb[7] = {0};
-    sprintf(currgb, "%02x%02x%02x", (long)rgb.r, (long)rgb.g, (long)rgb.b);
-    currentColor = String("#" + String(currgb)).c_str();
-    notifyClients();
+    CRGB rgb;
+    hsv2rgb_rainbow(CHSV(prghue, 255, 255), rgb); 
+    send_color(rgb);
   }
 }
 

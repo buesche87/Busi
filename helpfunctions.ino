@@ -194,6 +194,8 @@ String getValue(String data, char separator, int index)
   return found > index ? data.substring(strIndex[0], strIndex[1]) : "";
 }
 
+/* -- Change Mode -- */
+
 void changemode(int newmode, int testmode) {
 
   Serial.println();
@@ -214,4 +216,33 @@ void changemode(int newmode, int testmode) {
   Serial.print("New Mode: "); Serial.println(modus);
   notifyClients();
   delay(10);
+}
+
+/* -- LED Mode Select -- */
+
+void set_light_state(uint8_t state) {
+
+  currentState = state;
+
+  if (state == OFF)  {
+    led_off();
+  }
+  if (state == DOZE) {
+    led_doze();
+  }
+  if (state == WAKE) {
+    led_wake();
+  }
+  if (state == SLEEP) {
+    led_sleep();
+  }
+}
+
+/* -- Send current color to Webinterface -- */
+
+void send_color(CRGB rgb) {
+    char currgb[7] = {0};
+    sprintf(currgb, "%02x%02x%02x", (long)rgb.r, (long)rgb.g, (long)rgb.b);
+    currentColor = String("#" + String(currgb)).c_str();
+    notifyClients(); 
 }

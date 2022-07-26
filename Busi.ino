@@ -44,12 +44,10 @@ uint8_t testMode       = OFF;        // Testmode
 uint8_t currentState   = WAKE;       // Default LED mode
 uint8_t failCount      = 0;          // WiFi FailCount
 String currentColor    = "#000000";  // Color shown on Webinterface
-
 bool breakcycle        = false;      // Break led for-loop
 bool breaktest         = false;      // Break testmode while-loop
 int starttime;
 int endtime;
-
 
 /* Wifi Setting (config.json) */
 String devname;
@@ -245,10 +243,12 @@ void run(void) {
   if ( (rn >= big_time(dozetime)) && (rn < big_time(waketime)) && dozeactive == true ) {
     set_light_state(DOZE);
   }
+  
   /* Goto Wake-Time */
   else if ( (rn >= big_time(waketime)) && (rn < big_time(morningtime)) && wakeactive == true ) {
     set_light_state(WAKE);
   }
+  
   /* Goto Noon-Time */
   else if ( (rn >= big_time(noontime)) && (rn < big_time(afternoontime)) && noonactive == true ) {
     if (sleepofftimer > 0 && (rn > big_time(noontime) + sleepofftimer) ) {
@@ -264,6 +264,7 @@ void run(void) {
 
     if (sleepofftimer > 0) {
       EVERY_N_SECONDS(5) {
+        
         /* Calculate offtime */
         int offtime;
         bool midnight;
@@ -273,6 +274,7 @@ void run(void) {
           offtime = big_time(sleeptime) + sleepofftimer - 1440;
           midnight = true;
         }
+        
         /* Before midnight */
         else {
           offtime = big_time(sleeptime) + sleepofftimer;
@@ -304,11 +306,14 @@ void run(void) {
     }
   }
 }
+
+
 /*
    -------------------
    Program Mode
    -------------------
 */
+
 void program(void) {
 
   led_program();
@@ -323,7 +328,8 @@ void program(void) {
 */
 
 void test(void) {
-
+  
+  /* Doze Test */
   if (testMode == DOZE) {
     starttime = millis();
     endtime = starttime;
@@ -338,6 +344,7 @@ void test(void) {
     modus = prevmode;
   }
 
+  /* Wake Test */
   else if (testMode == WAKE) {
     starttime = millis();
     endtime = starttime;
@@ -352,6 +359,7 @@ void test(void) {
     modus = prevmode;
   }
 
+  /* Sleep Test */
   else if (testMode == SLEEP) {
     starttime = millis();
     endtime = starttime;
@@ -364,25 +372,5 @@ void test(void) {
       endtime = millis();
     }
     modus = prevmode;
-  }
-}
-
-/* -- LED Mode Select -- */
-
-void set_light_state(uint8_t state) {
-
-  currentState = state;
-
-  if (state == OFF)  {
-    led_off();
-  }
-  if (state == DOZE) {
-    led_doze();
-  }
-  if (state == WAKE) {
-    led_wake();
-  }
-  if (state == SLEEP) {
-    led_sleep();
   }
 }
