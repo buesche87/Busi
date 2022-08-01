@@ -1,9 +1,9 @@
-# Busi
-Mehr als ein Nachtlicht
+![busi_cover](https://user-images.githubusercontent.com/11134705/182131032-0e45e305-bd28-454c-a48f-fb17fea64c19.png)
 
 ---
 
 # Vorwort
+
 
 Busi wurde von einem Familienvater in seiner Freizeit entworfen, um seinen Kindern einen Anhaltspunkt für Schlafens- und Aufwachzeiten zu geben.
 Busi wird per Handarbeit in einer Heimwerkstatt hergestellt, hier auf GitHub wird der Code zum Nachbauen veröffentlicht.
