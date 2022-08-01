@@ -1,4 +1,4 @@
-![busi_cover](https://user-images.githubusercontent.com/11134705/182131032-0e45e305-bd28-454c-a48f-fb17fea64c19.png)
+![busi_cover](https://user-images.githubusercontent.com/11134705/182131555-211ecd85-fe14-4493-8667-a41c6dd720cc.png)
 
 ---
 
