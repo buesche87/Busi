@@ -30,3 +30,7 @@ Steht kein WLAN zur Verfügung, kann Busi über sein eigenes WLAN manuell aktivi
 # Screenshot
 
 https://ibb.co/bg9pTgQ
+
+# 3D-Modell
+
+[Busi stl v1.0.zip](https://github.com/buesche87/Busi/files/9551701/Busi.stl.v1.0.zip)
