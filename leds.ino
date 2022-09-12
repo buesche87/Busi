@@ -95,10 +95,10 @@ void led_sleep() {
 
     CRGB rgb = CRGB(r, g, b);
 
-    for (int i=4; i=0; i--) {
+    for (int i=5; i>0; i--) {
       leds[random(NUM_LEDS)] = rgb;
     }
-
+    
     // Show
     FastLED.setBrightness(sleepbrightness);
     FastLED.show();
@@ -122,7 +122,7 @@ void led_sleep() {
 
     CRGB rgb = CRGB(r, g, b);
 
-    for (int i=4; i=0; i--) {
+    for (int i=5; i>0; i--) {
       leds[random(NUM_LEDS)] = rgb;
     }
 

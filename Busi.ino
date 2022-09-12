@@ -146,6 +146,7 @@ void setup(void) {
   else {
     modus = PROGRAM;
     prevmode = PROGRAM;
+    WiFi.mode(WIFI_AP);
     WiFi.softAP(devname.c_str(), NULL);
     IPAddress IP = WiFi.softAPIP();
     sprintf(ipaddress, "%d.%d.%d.%d", IP[0], IP[1], IP[2], IP[3]);
