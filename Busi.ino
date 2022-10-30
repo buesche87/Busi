@@ -106,8 +106,8 @@ WiFiUDP ntpUDP;
 NTPClient timeClient(ntpUDP, timeserver);
 
 /*  Timezone Settings */
-TimeChangeRule myDST = {"CDT", Second, Sun, Mar, 2, +120};   // Daylight time = UTC + 2 hours
-TimeChangeRule mySTD = {"DST", First, Sun, Nov, 2, +60};     // Standard time = UTC + 1 hours
+TimeChangeRule myDST = {"CDT", Last, Sun, Mar, 2, +120};   // Daylight time = UTC + 2 hours
+TimeChangeRule mySTD = {"DST", Last, Sun, Oct, 2, +60};    // Standard time = UTC + 1 hours
 Timezone myTZ(myDST, mySTD);
 TimeChangeRule *tcr;
 
