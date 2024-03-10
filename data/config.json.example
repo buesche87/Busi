@@ -16,6 +16,7 @@
   "sleepyellowrange": "40",
   "sleepbrightness": "60",
   "sleepspeed": "5",
+  "sleepofftimer": 0,
   "dozestartcolor": "16",
   "dozestopcolor": "40",
   "dozestartbrightness": "60",
